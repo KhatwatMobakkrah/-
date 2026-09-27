@@ -216,6 +216,12 @@ header{
   border-radius:100px; font-weight:600; margin-bottom:16px;
 }
 
+/* قفل استلام الطفل */
+.pk-field{width:100%; max-width:320px; padding:12px 15px; border-radius:12px; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-family:inherit; font-size:.9rem; margin:0 auto 10px; text-align:right; display:block;}
+.pk-field::placeholder{color:var(--ink); opacity:.45;}
+.pk-err{color:#b23b3b; font-size:.85rem; margin-bottom:10px; display:none;}
+.pk-logout{font-size:.8rem; opacity:.6; margin-top:18px; background:none; border:none; text-decoration:underline; cursor:pointer; font-family:inherit;}
+
 footer{
   text-align:center; padding:24px 16px;
   border-top:1px solid var(--line);
@@ -247,7 +253,7 @@ footer{
   <button class="tab-btn" data-tab="features" onclick="switchTab('features')">مميزاتنا ✨</button>
   <button class="tab-btn" data-tab="prices" onclick="switchTab('prices')">الأقسام والأسعار</button>
   <button class="tab-btn" data-tab="contact" onclick="switchTab('contact')">تواصل معنا</button>
-  <button class="tab-btn" data-tab="pickup" onclick="switchTab('pickup')">استلام الطفل 🔒</button>
+  <button class="tab-btn" data-tab="pickup" onclick="switchTab('pickup')">تسجيل الدخول</button>
 </div>
 
 <div class="tab-panel active" id="tab-about">
@@ -281,30 +287,12 @@ footer{
     <div class="card">
       <h2 class="section-title">المميزات التي ترتكز عليها برامج المركز</h2>
       <ul class="feature-list">
-        <li>
-          <div class="icon">👩‍🏫</div>
-          <div class="txt"><strong>كوادر تعليمية متخصصة في رياض الأطفال</strong></div>
-        </li>
-        <li>
-          <div class="icon">📚</div>
-          <div class="txt"><strong>تأسيس الطفل في مادة القرآن والإنجليزي والرياضيات ولغتي</strong></div>
-        </li>
-        <li>
-          <div class="icon">🕌</div>
-          <div class="txt"><strong>تعليم الآداب الإسلامية</strong></div>
-        </li>
-        <li>
-          <div class="icon">🎬</div>
-          <div class="txt"><strong>سينما للأطفال وصالة ألعاب داخلية وصالة ألعاب حركية</strong></div>
-        </li>
-        <li>
-          <div class="icon">🎓</div>
-          <div class="txt"><strong>مشرفة الحضانة حاصلة على بكالوريوس ضيافة أطفال ودورات تخصصية في رعاية الأطفال</strong></div>
-        </li>
-        <li>
-          <div class="icon">🧹</div>
-          <div class="txt"><strong>مكان مخصص هادئ ونظيف لراحة وسلامة الأطفال</strong></div>
-        </li>
+        <li><div class="icon">👩‍🏫</div><div class="txt"><strong>كوادر تعليمية متخصصة في رياض الأطفال</strong></div></li>
+        <li><div class="icon">📚</div><div class="txt"><strong>تأسيس الطفل في مادة القرآن والإنجليزي والرياضيات ولغتي</strong></div></li>
+        <li><div class="icon">🕌</div><div class="txt"><strong>تعليم الآداب الإسلامية</strong></div></li>
+        <li><div class="icon">🎬</div><div class="txt"><strong>سينما للأطفال وصالة ألعاب داخلية وصالة ألعاب حركية</strong></div></li>
+        <li><div class="icon">🎓</div><div class="txt"><strong>مشرفة الحضانة حاصلة على بكالوريوس ضيافة أطفال ودورات تخصصية في رعاية الأطفال</strong></div></li>
+        <li><div class="icon">🧹</div><div class="txt"><strong>مكان مخصص هادئ ونظيف لراحة وسلامة الأطفال</strong></div></li>
       </ul>
     </div>
   </div>
@@ -313,39 +301,17 @@ footer{
 <div class="tab-panel" id="tab-prices">
   <div class="wrap">
     <div class="price-banner">🎉 الأسعار الحالية بخصم 20%</div>
-
     <div class="card price-block">
       <h3>🏠 الروضة</h3>
-      <div class="price-row">
-        <span>السنة الدراسية كاملة</span>
-        <span>
-          <span class="price-old">4500</span>
-          <span class="price-new">3600</span>
-        </span>
-      </div>
-      <div class="price-row">
-        <span>الفصل الدراسي</span>
-        <span>
-          <span class="price-old">2250</span>
-          <span class="price-new">1800</span>
-        </span>
-      </div>
-      <div class="offer-box">
-        🎉 عرض الإخوان: الابن الثاني بخصم 33% — السنة الدراسية بـ 2400 فقط
-      </div>
+      <div class="price-row"><span>السنة الدراسية كاملة</span><span><span class="price-old">4500</span><span class="price-new">3600</span></span></div>
+      <div class="price-row"><span>الفصل الدراسي</span><span><span class="price-old">2250</span><span class="price-new">1800</span></span></div>
+      <div class="offer-box">🎉 عرض الإخوان: الابن الثاني بخصم 33% — السنة الدراسية بـ 2400 فقط</div>
       <div class="installment">💳 إمكانية التقسيط على 3 دفعات</div>
     </div>
-
     <div class="card price-block">
       <h3>🧸 الحضانة</h3>
-      <div class="price-row">
-        <span>الشهر</span>
-        <span class="price-new">640</span>
-      </div>
-      <div class="nursery-note">
-        <span>👩‍🏫</span>
-        <span>مشرفة خريجة رياض أطفال متخصصة في هذه المرحلة العمرية</span>
-      </div>
+      <div class="price-row"><span>الشهر</span><span class="price-new">640</span></div>
+      <div class="nursery-note"><span>👩‍🏫</span><span>مشرفة خريجة رياض أطفال متخصصة في هذه المرحلة العمرية</span></div>
     </div>
   </div>
 </div>
@@ -354,49 +320,21 @@ footer{
   <div class="wrap">
     <div class="card">
       <h2 class="section-title">📍 الموقع</h2>
-      <div class="contact-item">
-        <div class="ic">📍</div>
-        <div>
-          <strong>حي العسيلة</strong><br>
-          <span style="opacity:.8">أمام مدرسة الرابعة والثلاثون الابتدائية</span>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="ic">📱</div>
-        <div>
-          <strong>واتساب</strong><br>
-          <a href="https://wa.me/966538120576" style="color:var(--teal); font-weight:600;">0538120576</a>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="ic">💬</div>
-        <div>
-          <strong>التواصل من خلال المحادثة المباشرة</strong><br>
-          <span style="opacity:.8">أسفل الصفحة</span>
-        </div>
-      </div>
-      <a class="wa-btn" href="https://wa.me/966538120576" target="_blank" rel="noopener">
-        💬 تواصل عبر واتساب
-      </a>
-      <div class="invite-box">
-        يسعدنا استقبال زيارتكم أو تواصلكم لمعرفة المزيد وحجز مقعد طفلكم
-      </div>
+      <div class="contact-item"><div class="ic">📍</div><div><strong>حي العسيلة</strong><br><span style="opacity:.8">أمام مدرسة الرابعة والثلاثون الابتدائية</span></div></div>
+      <div class="contact-item"><div class="ic">📱</div><div><strong>واتساب</strong><br><a href="https://wa.me/966538120576" style="color:var(--teal); font-weight:600;">0538120576</a></div></div>
+      <div class="contact-item"><div class="ic">💬</div><div><strong>التواصل من خلال المحادثة المباشرة</strong><br><span style="opacity:.8">أسفل الصفحة</span></div></div>
+      <a class="wa-btn" href="https://wa.me/966538120576" target="_blank" rel="noopener">💬 تواصل عبر واتساب</a>
+      <div class="invite-box">يسعدنا استقبال زيارتكم أو تواصلكم لمعرفة المزيد وحجز مقعد طفلكم</div>
     </div>
   </div>
 </div>
 
+<!-- ===== تسجيل الدخول فقط — تبويب عام دائم، لا يتحول اسمه أبداً ===== -->
 <div class="tab-panel" id="tab-pickup">
   <div class="wrap">
     <div class="card">
-      <div class="pickup-info">
-        <div class="status">🔒 استلام الطفل</div>
-        <h2 class="section-title" style="justify-content:center;">طلب استلام الطفل</h2>
-        <p style="opacity:.8; margin-bottom:20px;">
-          يمكنك طلب استلام طفلك أو التواصل مع المشرفة مباشرة عبر واتساب.
-        </p>
-        <a class="btn btn-teal" href="https://wa.me/966538120576?text=السلام%20عليكم،%20أرغب%20بطلب%20استلام%20طفلي" target="_blank" rel="noopener">
-          📲 طلب استلام عبر واتساب
-        </a>
+      <div class="pickup-info" id="gateInner">
+        <p style="opacity:.7">⏳ جارِ تحميل نظام تسجيل الدخول…</p>
       </div>
     </div>
   </div>
@@ -406,6 +344,39 @@ footer{
   🌈 مركز خطوات مبكرة لضيافة الأطفال — حي العسيلة، مكة المكرمة
 </footer>
 
+<!-- ===== شاشة مستقلة تماماً بعد تسجيل الدخول: استلام الطفل فقط ===== -->
+<div id="appScreen" style="display:none; min-height:100vh; background:var(--paper);">
+  <header>
+    <div class="nav">
+      <div class="brand"><span class="logo-emoji">🌈</span><span>خطوات مبكرة</span></div>
+      <div class="nav-actions">
+        <span id="whoTag" style="font-size:.85rem; opacity:.7;"></span>
+        <button class="btn btn-ghost2" onclick="appLogout()">خروج</button>
+      </div>
+    </div>
+  </header>
+  <div class="wrap" style="padding:28px 20px;">
+    <div id="announceBox" style="display:none;" class="offer-box"></div>
+    <div id="adminComposeBox" style="display:none;" class="card">
+      <h2 class="section-title">✏️ إضافة تنبيه / فعالية</h2>
+      <p style="margin-bottom:12px;">هذا النص يظهر لجميع أولياء الأمور فوق صفحة استلام الطفل.</p>
+      <textarea id="announceInput" rows="3" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:12px; font-family:inherit; font-size:.92rem; background:var(--card); margin-bottom:10px;" placeholder="مثال: يوم الخميس القادم رحلة ترفيهية، الرجاء الحضور قبل الساعة 8"></textarea>
+      <button class="btn btn-primary" onclick="publishAnnouncement()">نشر التنبيه</button>
+      <button class="btn btn-ghost2" onclick="clearAnnouncement()">حذف التنبيه الحالي</button>
+    </div>
+    <div id="adminPendingBox" style="display:none;" class="card">
+      <h2 class="section-title">طلبات انضمام أولياء الأمور</h2>
+      <div id="pendingList"></div>
+    </div>
+    <div class="card pickup-info">
+      <div class="status">🔓 استلام الطفل</div>
+      <h2 class="section-title" style="justify-content:center;">طلب استلام الطفل</h2>
+      <p style="opacity:.8; margin-bottom:20px;">يمكنك طلب استلام طفلك أو التواصل مع المشرفة مباشرة عبر واتساب.</p>
+      <a class="btn btn-teal" href="https://wa.me/966538120576?text=السلام%20عليكم،%20أرغب%20بطلب%20استلام%20طفلي" target="_blank" rel="noopener">📲 طلب استلام عبر واتساب</a>
+    </div>
+  </div>
+</div>
+
 <script>
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -414,6 +385,118 @@ function switchTab(name) {
   document.getElementById('tab-' + name).classList.add('active');
   window.scrollTo(0, 0);
 }
+
+/* تسجيل الدخول منفصل تماماً عن "استلام الطفل" — Firebase Auth + Firestore
+   الصفحة العامة (تبويبات) لا تتغيّر أبداً؛ بعد الدخول والموافقة تُستبدل الشاشة كاملة بـ appScreen */
+</script>
+<script type="module">
+import { initializeApp } from "https://cdn.jsdelivr.net/npm/firebase@10.13.2/app/+esm";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://cdn.jsdelivr.net/npm/firebase@10.13.2/auth/+esm";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, query, where, onSnapshot, serverTimestamp } from "https://cdn.jsdelivr.net/npm/firebase@10.13.2/firestore/+esm";
+
+/* ⚠️ استبدلي هذا الكائن بإعدادات مشروعك من Firebase Console */
+const firebaseConfig = {
+  apiKey: "PASTE_API_KEY_HERE",
+  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
+  projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE_PROJECT_ID.firebasestorage.app",
+  messagingSenderId: "PASTE_SENDER_ID",
+  appId: "PASTE_APP_ID"
+};
+const SUPER_ADMIN_EMAIL = "hameed.h.almalki@gmail.com";
+let auth, db, fbReady=false;
+try{ const app=initializeApp(firebaseConfig); auth=getAuth(app); db=getFirestore(app); fbReady=true; }catch(e){ fbReady=false; }
+
+const gateInner = document.getElementById("gateInner");
+const appScreen = document.getElementById("appScreen");
+const siteWrap = document.querySelectorAll("header, .hero-banner, .tabs, footer");
+let profile=null, user=null, authMode="login", authErr="", unsubProfile=null, unsubAnn=null, unsubPending=null;
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function friendlyErr(e){const m={"auth/invalid-email":"صيغة البريد غير صحيحة","auth/user-not-found":"لا يوجد حساب بهذا البريد","auth/wrong-password":"كلمة المرور غير صحيحة","auth/invalid-credential":"البريد أو كلمة المرور غير صحيحة","auth/email-already-in-use":"هذا البريد مسجّل، جرّبي تسجيل الدخول","auth/weak-password":"كلمة المرور يجب 6 أحرف فأكثر"}; return m[e.code]||e.message||"حدث خطأ";}
+
+async function ensureUserDoc(uid,name,email){
+  const ref=doc(db,"pickupUsers",uid); const snap=await getDoc(ref);
+  if(snap.exists()) return snap.data();
+  const isSuper = email.toLowerCase()===SUPER_ADMIN_EMAIL.toLowerCase();
+  const data={name:name||email.split("@")[0], email:email.toLowerCase(), role:isSuper?"مسؤول":"", status:isSuper?"approved":"pending", createdAt:serverTimestamp()};
+  await setDoc(ref,data); return data;
+}
+if(!fbReady){ gateInner.innerHTML = `<div class="pk-err" style="display:block">لم يتم ربط النظام بمشروع Firebase بعد.</div>`; }
+else{
+  renderGate();
+  onAuthStateChanged(auth, async (u)=>{
+    if(unsubProfile) unsubProfile();
+    if(!u){ user=null; profile=null; hideApp(); renderGate(); return; }
+    user=u;
+    try{ profile = await ensureUserDoc(u.uid, u.displayName, u.email); }catch(e){ profile=null; }
+    unsubProfile = onSnapshot(doc(db,"pickupUsers",u.uid), snap=>{
+      if(snap.exists()) profile=snap.data();
+      if(profile && profile.status==="approved") showApp(); else { hideApp(); renderGate(); }
+    });
+  }, (err)=>{ gateInner.innerHTML = `<div class="pk-err" style="display:block">تعذّر الاتصال: ${esc(err.message)}</div>`; });
+}
+function renderGate(){
+  if(user) return;
+  const isLogin = authMode==="login";
+  gateInner.innerHTML = `
+    <h2 class="section-title" style="justify-content:center;">${isLogin?"تسجيل الدخول":"إنشاء حساب ولي أمر"}</h2>
+    ${authErr?`<div class="pk-err" style="display:block">${esc(authErr)}</div>`:""}
+    ${!isLogin?`<input class="pk-field" id="gName" placeholder="الاسم الكامل">`:""}
+    <input class="pk-field" id="gEmail" type="email" placeholder="البريد الإلكتروني">
+    <input class="pk-field" id="gPass" type="password" placeholder="كلمة المرور">
+    <button class="btn btn-primary" onclick="window._doAuth()">${isLogin?"دخول":"إنشاء الحساب"}</button>
+    <p style="margin-top:14px; font-size:.88rem;">${isLogin?"ولي أمر جديد؟":"لديك حساب؟"} <a href="#" onclick="window._switchAuth();return false;" style="color:var(--coral); font-weight:700;">${isLogin?"سجّل حساب جديد":"تسجيل الدخول"}</a></p>`;
+}
+window._switchAuth = ()=>{ authMode = authMode==="login"?"register":"login"; authErr=""; renderGate(); };
+window._doAuth = async ()=>{
+  const email=document.getElementById("gEmail").value.trim(), pass=document.getElementById("gPass").value;
+  authErr="";
+  try{
+    if(authMode==="login") await signInWithEmailAndPassword(auth,email,pass);
+    else{
+      const name=document.getElementById("gName").value.trim();
+      if(!name){ authErr="الرجاء إدخال الاسم"; renderGate(); return; }
+      const cred=await createUserWithEmailAndPassword(auth,email,pass);
+      await ensureUserDoc(cred.user.uid,name,email);
+    }
+  }catch(e){ authErr=friendlyErr(e); renderGate(); }
+};
+window.appLogout = async ()=>{ await signOut(auth); };
+
+function hideApp(){ appScreen.style.display="none"; siteWrap.forEach(el=>el.style.display=""); if(unsubAnn)unsubAnn(); if(unsubPending)unsubPending(); }
+function showApp(){
+  siteWrap.forEach(el=>el.style.display="none");
+  appScreen.style.display="block";
+  document.getElementById("whoTag").textContent = `${profile.name} · ${profile.role}`;
+  const isAdmin = profile.role==="مسؤول";
+  document.getElementById("adminComposeBox").style.display = isAdmin?"block":"none";
+  document.getElementById("adminPendingBox").style.display = isAdmin?"block":"none";
+  unsubAnn = onSnapshot(doc(db,"settings","announcement"), snap=>{
+    const box=document.getElementById("announceBox");
+    if(snap.exists() && snap.data().text){ box.style.display="block"; box.textContent="📢 "+snap.data().text; }
+    else box.style.display="none";
+  });
+  if(isAdmin){
+    unsubPending = onSnapshot(query(collection(db,"pickupUsers"), where("status","==","pending")), snap=>{
+      const users = snap.docs.map(d=>({id:d.id,...d.data()}));
+      const list=document.getElementById("pendingList");
+      list.innerHTML = users.length===0 ? `<p style="opacity:.7">لا يوجد طلبات انضمام حالياً</p>` :
+        users.map(u=>`<div class="contact-item"><div><strong>${esc(u.name)}</strong><br><span style="opacity:.7">${esc(u.email)}</span></div>
+        <div style="margin-right:auto; display:flex; gap:8px;"><button class="btn btn-teal" style="padding:8px 14px;font-size:.82rem" onclick="window._approve('${u.id}')">قبول كولي أمر</button>
+        <button class="btn btn-ghost2" style="padding:8px 14px;font-size:.82rem" onclick="window._reject('${u.id}')">رفض</button></div></div>`).join("");
+    });
+  }
+}
+window._approve = async (id)=>{ await updateDoc(doc(db,"pickupUsers",id), {status:"approved", role:"ولي أمر"}); };
+window._reject = async (id)=>{ await updateDoc(doc(db,"pickupUsers",id), {status:"rejected"}); };
+window.publishAnnouncement = async ()=>{
+  const text=document.getElementById("announceInput").value.trim();
+  if(!text) return;
+  await setDoc(doc(db,"settings","announcement"), {text, updatedBy:profile.email, updatedAt:serverTimestamp()});
+  document.getElementById("announceInput").value="";
+};
+window.clearAnnouncement = async ()=>{ await deleteDoc(doc(db,"settings","announcement")); };
 </script>
 </body>
 </html>
