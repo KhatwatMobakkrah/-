@@ -390,7 +390,7 @@ const appScreen = document.getElementById("appScreen");
 const siteWrap = document.querySelectorAll("header, .hero-banner, .tabs, footer");
 let profile=null, user=null, authMode="login", authErr="", unsubProfile=null, unsubAnn=null, unsubPending=null;
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function friendlyErr(e){const m={"auth/invalid-email":"صيغة البريد غير صحيحة","auth/user-not-found":"لا يوجد حساب بهذا البريد","auth/wrong-password":"كلمة المرور غير صحيحة","auth/invalid-credential":"البريد أو كلمة المرور غير صحيحة","auth/email-already-in-use":"هذا البريد مسجّل، جرّبي تسجيل الدخول","auth/weak-password":"كلمة المرور يجب 6 أحرف فأكثر"}; return m[e.code]||e.message||"حدث خطأ";}
+function friendlyErr(e){const m={"auth/invalid-email":"صيغة البريد غير صحيحة","auth/user-not-found":"لا يوجد حساب بهذا البريد","auth/wrong-password":"كلمة المرور غير صحيحة","auth/invalid-credential":"البريد أو كلمة المرور غير صحيحة","auth/email-already-in-use":"هذا البريد مسجّل، جرّبي تسجيل الدخول","auth/weak-password":"كلمة المرور يجب 6 أحرف فأكثر","auth/too-many-requests":"محاولات كثيرة متتالية، حاولي بعد قليل","auth/network-request-failed":"تعذّر الاتصال بالإنترنت، تأكدي من الشبكة وحاولي مرة أخرى","auth/user-disabled":"هذا الحساب معطّل، تواصلي مع الإدارة"}; return m[e.code]||e.message||"حدث خطأ";}
 async function ensureUserDoc(uid,name,email){
   const ref=doc(db,"pickupUsers",uid); const snap=await getDoc(ref);
   if(snap.exists()) return snap.data();
@@ -441,16 +441,19 @@ function renderGate(){
   gateInner.innerHTML = `
     <h2 class="section-title" style="justify-content:center;">${isLogin?"تسجيل الدخول":"إنشاء حساب ولي أمر"}</h2>
     ${authErr?`<div class="pk-err" style="display:block">${esc(authErr)}</div>`:""}
-    ${!isLogin?`<input class="pk-field" id="gName" placeholder="الاسم الكامل">`:""}
-    <input class="pk-field" id="gEmail" type="email" dir="ltr" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="البريد الإلكتروني">
-    <input class="pk-field" id="gPass" type="password" dir="ltr" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="كلمة المرور">
-    <button class="btn btn-primary" onclick="window._doAuth()">${isLogin?"دخول":"إنشاء الحساب"}</button>
+    ${!isLogin?`<input class="pk-field" id="gName" autocomplete="name" placeholder="الاسم الكامل">`:""}
+    <input class="pk-field" id="gEmail" type="email" dir="ltr" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="البريد الإلكتروني">
+    <input class="pk-field" id="gPass" type="password" dir="ltr" autocomplete="${isLogin?"current-password":"new-password"}" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="كلمة المرور">
+    <button class="btn btn-primary" id="gAuthBtn" onclick="window._doAuth()">${isLogin?"دخول":"إنشاء الحساب"}</button>
     <p style="margin-top:14px; font-size:.88rem;">${isLogin?"ولي أمر جديد؟":"لديك حساب؟"} <a href="#" onclick="window._switchAuth();return false;" style="color:var(--coral); font-weight:700;">${isLogin?"سجّل حساب جديد":"تسجيل الدخول"}</a></p>`;
 }
 window._switchAuth = ()=>{ authMode = authMode==="login"?"register":"login"; authErr=""; renderGate(); };
 window._doAuth = async ()=>{
   const email=document.getElementById("gEmail").value.trim(), pass=document.getElementById("gPass").value;
+  const btn=document.getElementById("gAuthBtn");
   authErr="";
+  if(!email || !pass){ authErr="الرجاء تعبئة البريد وكلمة المرور"; renderGate(); return; }
+  if(btn){ btn.disabled=true; btn.style.opacity=".6"; btn.textContent="جارِ التحقق..."; }
   try{
     if(authMode==="login") await signInWithEmailAndPassword(auth,email,pass);
     else{
