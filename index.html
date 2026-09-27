@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مركز خطوات مبكرة لضيافة الأطفال</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1B3B36;
+  --paper:#F6F2E7;
+  --card:#FFFFFF;
+  --sun:#FFB100;
+  --coral:#FF6F59;
+  --teal:#4E9B98;
+  --teal-dark:#3A7A78;
+  --line:rgba(27,59,54,.12);
+  --shadow:0 10px 28px rgba(27,59,54,.10);
+  --shadow-lg:0 20px 50px rgba(27,59,54,.14);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Tajawal',sans-serif;
+  line-height:1.75;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+h1,h2,h3,.brand{font-family:'Baloo Bhaijaan 2',sans-serif;}
+a{color:inherit; text-decoration:none;}
+.wrap{max-width:1100px; margin:0 auto; padding:0 20px;}
+
+header{
+  position:sticky; top:0; z-index:100;
+  background:color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 20px; max-width:1100px; margin:0 auto;
+}
+.brand{
+  font-size:1.25rem; font-weight:700;
+  display:flex; align-items:center; gap:8px;
+}
+.brand .logo-emoji{font-size:1.5rem;}
+.nav-actions{display:flex; gap:10px; align-items:center;}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 20px; border-radius:100px;
+  font-weight:600; font-family:'Tajawal',sans-serif;
+  border:none; cursor:pointer; font-size:.92rem;
+  transition:transform .15s, box-shadow .15s;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{
+  background:var(--coral); color:#fff;
+  box-shadow:0 6px 18px rgba(255,111,89,.35);
+}
+.btn-primary:hover{box-shadow:0 8px 24px rgba(255,111,89,.45);}
+.btn-teal{background:var(--teal); color:#fff; box-shadow:0 6px 18px rgba(78,155,152,.3);}
+
+.hero-banner{
+  background:linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color:#fff; padding:28px 20px; text-align:center;
+}
+.hero-banner .hi{font-size:1.6rem; font-weight:700; margin-bottom:6px;}
+.hero-banner .sub{opacity:.92; font-size:1rem;}
+
+.tabs{
+  display:flex; gap:6px; overflow-x:auto;
+  padding:14px 16px; background:var(--card);
+  border-bottom:1px solid var(--line);
+  position:sticky; top:57px; z-index:40;
+  -webkit-overflow-scrolling:touch;
+}
+.tab-btn{
+  flex:none; padding:10px 18px; border-radius:100px;
+  border:none; background:transparent;
+  font-family:'Tajawal',sans-serif; font-weight:600;
+  font-size:.9rem; color:var(--ink); opacity:.65;
+  cursor:pointer; white-space:nowrap;
+  transition:all .2s;
+}
+.tab-btn.active{
+  background:var(--coral); color:#fff; opacity:1;
+  box-shadow:0 4px 14px rgba(255,111,89,.3);
+}
+.tab-btn:hover:not(.active){opacity:1; background:rgba(27,59,54,.06);}
+
+.tab-panel{display:none; padding:28px 0 50px;}
+.tab-panel.active{display:block;}
+
+.section-title{
+  font-size:1.35rem; font-weight:700; margin-bottom:18px;
+  display:flex; align-items:center; gap:8px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:24px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+.card p{opacity:.82; font-size:.98rem;}
+
+.feature-list{list-style:none;}
+.feature-list li{
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px 0;
+  border-bottom:1px solid var(--line);
+}
+.feature-list li:last-child{border-bottom:none;}
+.feature-list .icon{
+  font-size:1.5rem; flex:none; width:42px; height:42px;
+  display:flex; align-items:center; justify-content:center;
+  background:color-mix(in srgb, var(--teal) 12%, transparent);
+  border-radius:12px;
+}
+.feature-list .txt{flex:1;}
+.feature-list .txt strong{display:block; margin-bottom:2px;}
+
+.price-banner{
+  background:linear-gradient(135deg, var(--coral), #ff8a75);
+  color:#fff; border-radius:16px; padding:14px 20px;
+  text-align:center; font-weight:700; font-size:1.05rem;
+  margin-bottom:20px;
+}
+.price-block{margin-bottom:8px;}
+.price-block h3{
+  font-size:1.2rem; margin-bottom:14px;
+  display:flex; align-items:center; gap:8px;
+}
+.price-row{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 0; border-bottom:1px dashed var(--line);
+  font-size:1rem;
+}
+.price-row:last-of-type{border-bottom:none;}
+.price-old{
+  text-decoration:line-through; opacity:.5; margin-left:8px;
+  font-size:.9rem;
+}
+.price-new{font-weight:700; color:var(--coral); font-size:1.15rem;}
+.offer-box{
+  background:linear-gradient(135deg, #FFE8A3, #FFD56A);
+  border-radius:14px; padding:14px 18px;
+  margin:16px 0; font-weight:600; font-size:.95rem;
+  color:#5a4200;
+}
+.installment{
+  display:flex; align-items:center; gap:8px;
+  font-size:.9rem; opacity:.75; margin-top:10px;
+}
+.nursery-note{
+  display:flex; align-items:flex-start; gap:10px;
+  margin-top:14px; font-size:.92rem; opacity:.85;
+}
+
+.two-cols{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  margin-top:18px;
+}
+@media(max-width:520px){.two-cols{grid-template-columns:1fr;}}
+.mini-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px; padding:20px; text-align:center;
+}
+.mini-card .ic{font-size:2rem; margin-bottom:8px;}
+.mini-card h4{font-size:1.05rem; margin-bottom:4px;}
+.mini-card p{font-size:.88rem; opacity:.7;}
+.qurrah-banner{
+  background:linear-gradient(135deg, #FFE8A3, #FFD56A);
+  border-radius:14px; padding:14px 18px;
+  margin-top:18px; display:flex; align-items:center; gap:10px;
+  font-weight:600; color:#5a4200;
+}
+
+.contact-item{
+  display:flex; align-items:flex-start; gap:14px;
+  padding:14px 0; border-bottom:1px solid var(--line);
+}
+.contact-item:last-child{border-bottom:none;}
+.contact-item .ic{
+  width:42px; height:42px; border-radius:12px;
+  background:color-mix(in srgb, var(--teal) 14%, transparent);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.25rem; flex:none;
+}
+.wa-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  background:#25D366; color:#fff;
+  padding:12px 22px; border-radius:100px;
+  font-weight:600; margin-top:16px;
+  box-shadow:0 6px 18px rgba(37,211,102,.3);
+}
+.invite-box{
+  background:linear-gradient(135deg, #FFE8A3, #FFD56A);
+  border-radius:16px; padding:18px;
+  margin-top:20px; text-align:center;
+  font-weight:600; color:#5a4200;
+}
+
+.pickup-info{text-align:center; padding:20px 0;}
+.pickup-info .status{
+  display:inline-flex; align-items:center; gap:8px;
+  background:color-mix(in srgb, var(--teal) 15%, transparent);
+  color:var(--teal-dark); padding:8px 16px;
+  border-radius:100px; font-weight:600; margin-bottom:16px;
+}
+
+footer{
+  text-align:center; padding:24px 16px;
+  border-top:1px solid var(--line);
+  font-size:.82rem; opacity:.6;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <span class="logo-emoji">🌈</span>
+      <span>خطوات مبكرة</span>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-primary" href="tel:+966538120576">اتصل الآن</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero-banner">
+  <div class="hi">👋 حياكم</div>
+  <div class="sub">العب وأتعلم — بيئة دافئة لرعاية أطفالكم وتنمية مهاراتهم</div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab-btn active" data-tab="about" onclick="switchTab('about')">من نحن</button>
+  <button class="tab-btn" data-tab="features" onclick="switchTab('features')">مميزاتنا ✨</button>
+  <button class="tab-btn" data-tab="prices" onclick="switchTab('prices')">الأقسام والأسعار</button>
+  <button class="tab-btn" data-tab="contact" onclick="switchTab('contact')">تواصل معنا</button>
+  <button class="tab-btn" data-tab="pickup" onclick="switchTab('pickup')">استلام الطفل 🔒</button>
+</div>
+
+<div class="tab-panel active" id="tab-about">
+  <div class="wrap">
+    <div class="card">
+      <h2 class="section-title">من نحن</h2>
+      <p>
+        مركز خطوات مبكرة لضيافة الأطفال يتوفر لدينا كادر متخصص في رياض الأطفال لرعاية وتعليم أطفالكم وتنمية مهاراتهم، ضمن قسمي الروضة والحضانة، في بيئة آمنة ومحببة للأطفال.
+      </p>
+      <div class="two-cols">
+        <div class="mini-card">
+          <div class="ic">🧩</div>
+          <h4>الحضانة</h4>
+          <p>رعاية متخصصة</p>
+        </div>
+        <div class="mini-card">
+          <div class="ic">🎨</div>
+          <h4>الروضة</h4>
+          <p>تعليم وأنشطة يومية</p>
+        </div>
+      </div>
+      <div class="qurrah-banner">
+        ⭐ برنامج قُره — متوفر خصيصًا لدعم الأمهات العاملات
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-features">
+  <div class="wrap">
+    <div class="card">
+      <h2 class="section-title">المميزات التي ترتكز عليها برامج المركز</h2>
+      <ul class="feature-list">
+        <li>
+          <div class="icon">👩‍🏫</div>
+          <div class="txt"><strong>كوادر تعليمية متخصصة في رياض الأطفال</strong></div>
+        </li>
+        <li>
+          <div class="icon">📚</div>
+          <div class="txt"><strong>تأسيس الطفل في مادة القرآن والإنجليزي والرياضيات ولغتي</strong></div>
+        </li>
+        <li>
+          <div class="icon">🕌</div>
+          <div class="txt"><strong>تعليم الآداب الإسلامية</strong></div>
+        </li>
+        <li>
+          <div class="icon">🎬</div>
+          <div class="txt"><strong>سينما للأطفال وصالة ألعاب داخلية وصالة ألعاب حركية</strong></div>
+        </li>
+        <li>
+          <div class="icon">🎓</div>
+          <div class="txt"><strong>مشرفة الحضانة حاصلة على بكالوريوس ضيافة أطفال ودورات تخصصية في رعاية الأطفال</strong></div>
+        </li>
+        <li>
+          <div class="icon">🧹</div>
+          <div class="txt"><strong>مكان مخصص هادئ ونظيف لراحة وسلامة الأطفال</strong></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-prices">
+  <div class="wrap">
+    <div class="price-banner">🎉 الأسعار الحالية بخصم 20%</div>
+
+    <div class="card price-block">
+      <h3>🏠 الروضة</h3>
+      <div class="price-row">
+        <span>السنة الدراسية كاملة</span>
+        <span>
+          <span class="price-old">4500</span>
+          <span class="price-new">3600</span>
+        </span>
+      </div>
+      <div class="price-row">
+        <span>الفصل الدراسي</span>
+        <span>
+          <span class="price-old">2250</span>
+          <span class="price-new">1800</span>
+        </span>
+      </div>
+      <div class="offer-box">
+        🎉 عرض الإخوان: الابن الثاني بخصم 33% — السنة الدراسية بـ 2400 فقط
+      </div>
+      <div class="installment">💳 إمكانية التقسيط على 3 دفعات</div>
+    </div>
+
+    <div class="card price-block">
+      <h3>🧸 الحضانة</h3>
+      <div class="price-row">
+        <span>الشهر</span>
+        <span class="price-new">640</span>
+      </div>
+      <div class="nursery-note">
+        <span>👩‍🏫</span>
+        <span>مشرفة خريجة رياض أطفال متخصصة في هذه المرحلة العمرية</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-contact">
+  <div class="wrap">
+    <div class="card">
+      <h2 class="section-title">📍 الموقع</h2>
+      <div class="contact-item">
+        <div class="ic">📍</div>
+        <div>
+          <strong>حي العسيلة</strong><br>
+          <span style="opacity:.8">أمام مدرسة الرابعة والثلاثون الابتدائية</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ic">📱</div>
+        <div>
+          <strong>واتساب</strong><br>
+          <a href="https://wa.me/966538120576" style="color:var(--teal); font-weight:600;">0538120576</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ic">💬</div>
+        <div>
+          <strong>التواصل من خلال المحادثة المباشرة</strong><br>
+          <span style="opacity:.8">أسفل الصفحة</span>
+        </div>
+      </div>
+      <a class="wa-btn" href="https://wa.me/966538120576" target="_blank" rel="noopener">
+        💬 تواصل عبر واتساب
+      </a>
+      <div class="invite-box">
+        يسعدنا استقبال زيارتكم أو تواصلكم لمعرفة المزيد وحجز مقعد طفلكم
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab-pickup">
+  <div class="wrap">
+    <div class="card">
+      <div class="pickup-info">
+        <div class="status">🔒 استلام الطفل</div>
+        <h2 class="section-title" style="justify-content:center;">طلب استلام الطفل</h2>
+        <p style="opacity:.8; margin-bottom:20px;">
+          يمكنك طلب استلام طفلك أو التواصل مع المشرفة مباشرة عبر واتساب.
+        </p>
+        <a class="btn btn-teal" href="https://wa.me/966538120576?text=السلام%20عليكم،%20أرغب%20بطلب%20استلام%20طفلي" target="_blank" rel="noopener">
+          📲 طلب استلام عبر واتساب
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  🌈 مركز خطوات مبكرة لضيافة الأطفال — حي العسيلة، مكة المكرمة
+</footer>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${name}"]`).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
