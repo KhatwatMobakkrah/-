@@ -19,6 +19,8 @@
   --line:rgba(27,59,54,.12);
   --shadow:0 10px 28px rgba(27,59,54,.10);
   --shadow-lg:0 20px 50px rgba(27,59,54,.14);
+  --green:#25D366;
+  --danger:#e74c3c;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
@@ -63,7 +65,12 @@ header{
 }
 .btn-primary:hover{box-shadow:0 8px 24px rgba(255,111,89,.45);}
 .btn-teal{background:var(--teal); color:#fff; box-shadow:0 6px 18px rgba(78,155,152,.3);}
-.btn-ghost2{background:transparent; color:var(--ink); border:1px solid var(--line);}
+.btn-outline{
+  background:transparent; border:2px solid var(--line);
+  color:var(--ink);
+}
+.btn-danger{background:var(--danger); color:#fff;}
+.btn-sm{padding:8px 14px; font-size:.85rem;}
 .hero-banner{
   background:linear-gradient(135deg, var(--teal), var(--teal-dark));
   color:#fff; padding:28px 20px; text-align:center;
@@ -186,13 +193,6 @@ header{
   display:flex; align-items:center; justify-content:center;
   font-size:1.25rem; flex:none;
 }
-.wa-btn{
-  display:inline-flex; align-items:center; gap:8px;
-  background:#25D366; color:#fff;
-  padding:12px 22px; border-radius:100px;
-  font-weight:600; margin-top:16px;
-  box-shadow:0 6px 18px rgba(37,211,102,.3);
-}
 .invite-box{
   background:linear-gradient(135deg, #FFE8A3, #FFD56A);
   border-radius:16px; padding:18px;
@@ -206,298 +206,772 @@ header{
   color:var(--teal-dark); padding:8px 16px;
   border-radius:100px; font-weight:600; margin-bottom:16px;
 }
-/* قفل استلام الطفل */
-.pk-field{width:100%; max-width:320px; padding:12px 15px; border-radius:12px; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-family:inherit; font-size:.9rem; margin:0 auto 10px; text-align:right; display:block;}
-.pk-field::placeholder{color:var(--ink); opacity:.45;}
-.pk-field[dir="ltr"]{text-align:left;}
-.pk-err{color:#b23b3b; font-size:.85rem; margin-bottom:10px; display:none;}
-.pk-logout{font-size:.8rem; opacity:.6; margin-top:18px; background:none; border:none; text-decoration:underline; cursor:pointer; font-family:inherit;}
 footer{
   text-align:center; padding:24px 16px;
   border-top:1px solid var(--line);
   font-size:.82rem; opacity:.6;
 }
+
+/* ===== Login Screen ===== */
+#login-screen{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:24px; background:var(--paper);
+}
+.login-card{
+  background:var(--card); border-radius:24px; padding:36px 28px;
+  box-shadow:var(--shadow-lg); width:100%; max-width:420px;
+  border:1px solid var(--line);
+}
+.login-card .logo{
+  text-align:center; margin-bottom:24px;
+}
+.login-card .logo .emoji{font-size:3rem;}
+.login-card h1{font-size:1.5rem; text-align:center; margin-bottom:6px;}
+.login-card .sub{text-align:center; opacity:.7; margin-bottom:28px; font-size:.95rem;}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block; font-weight:600; margin-bottom:6px; font-size:.92rem;}
+.form-group input, .form-group select, .form-group textarea{
+  width:100%; padding:12px 16px; border-radius:12px;
+  border:1.5px solid var(--line); font-family:'Tajawal',sans-serif;
+  font-size:1rem; background:#fff; color:var(--ink);
+  transition:border-color .2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus{
+  outline:none; border-color:var(--teal);
+}
+.form-group textarea{min-height:110px; resize:vertical;}
+.role-tabs{
+  display:flex; gap:8px; margin-bottom:22px;
+}
+.role-tab{
+  flex:1; padding:12px; border-radius:12px; border:2px solid var(--line);
+  background:transparent; font-family:'Tajawal',sans-serif;
+  font-weight:600; cursor:pointer; text-align:center; transition:all .2s;
+}
+.role-tab.active{
+  border-color:var(--coral); background:color-mix(in srgb, var(--coral) 12%, transparent);
+  color:var(--coral);
+}
+.login-error{
+  background:#ffeaea; color:var(--danger); padding:10px 14px;
+  border-radius:10px; margin-bottom:14px; font-size:.9rem; display:none;
+}
+.user-badge{
+  display:inline-flex; align-items:center; gap:6px;
+  background:color-mix(in srgb, var(--teal) 15%, transparent);
+  color:var(--teal-dark); padding:6px 12px; border-radius:100px;
+  font-size:.85rem; font-weight:600;
+}
+.hidden{display:none !important;}
+
+/* Members & Requests */
+.member-row, .request-row, .suggestion-row{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:14px 0; border-bottom:1px solid var(--line);
+}
+.member-row:last-child, .request-row:last-child, .suggestion-row:last-child{border-bottom:none;}
+.member-info, .request-info, .suggestion-info{flex:1;}
+.member-info strong, .request-info strong{display:block;}
+.member-info span, .request-info span, .suggestion-info span{font-size:.88rem; opacity:.7;}
+.badge{
+  display:inline-block; padding:3px 10px; border-radius:100px;
+  font-size:.78rem; font-weight:600;
+}
+.badge-pending{background:#fff3cd; color:#856404;}
+.badge-done{background:#d4edda; color:#155724;}
+.badge-parent{background:color-mix(in srgb, var(--teal) 18%, transparent); color:var(--teal-dark);}
+.badge-admin{background:color-mix(in srgb, var(--coral) 18%, transparent); color:var(--coral);}
+.empty-state{
+  text-align:center; padding:30px 10px; opacity:.6;
+}
+.empty-state .ic{font-size:2.5rem; margin-bottom:8px;}
+.form-row{display:flex; gap:10px; flex-wrap:wrap;}
+.form-row .form-group{flex:1; min-width:140px;}
+.success-msg{
+  background:#d4edda; color:#155724; padding:12px 16px;
+  border-radius:12px; margin-bottom:16px; font-weight:600; display:none;
+}
+.alert-info{
+  background:color-mix(in srgb, var(--teal) 12%, transparent);
+  border-radius:12px; padding:14px 16px; margin-bottom:16px;
+  font-size:.93rem;
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="nav">
-    <div class="brand">
-      <span class="logo-emoji">🌈</span>
-      <span>خطوات مبكرة</span>
+
+<!-- ========== شاشة تسجيل الدخول ========== -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="logo">
+      <div class="emoji">🌈</div>
+      <h1>خطوات مبكرة</h1>
+      <p class="sub">مركز ضيافة الأطفال</p>
     </div>
-    <div class="nav-actions">
-      <a class="btn btn-primary" href="tel:+966538120576">اتصل الآن</a>
+
+    <div class="role-tabs">
+      <button class="role-tab active" data-role="parent" onclick="setRole('parent')">ولي أمر</button>
+      <button class="role-tab" data-role="admin" onclick="setRole('admin')">مدير</button>
     </div>
-  </div>
-</header>
-<div class="hero-banner">
-  <div class="hi">👋 حياكم</div>
-  <div class="sub">العب وأتعلم — بيئة دافئة لرعاية أطفالكم وتنمية مهاراتهم</div>
-</div>
-<div class="tabs" id="tabs">
-  <button class="tab-btn active" data-tab="about" onclick="switchTab('about')">من نحن</button>
-  <button class="tab-btn" data-tab="features" onclick="switchTab('features')">مميزاتنا ✨</button>
-  <button class="tab-btn" data-tab="prices" onclick="switchTab('prices')">الأقسام والأسعار</button>
-  <button class="tab-btn" data-tab="contact" onclick="switchTab('contact')">تواصل معنا</button>
-  <button class="tab-btn" data-tab="pickup" onclick="switchTab('pickup')">تسجيل الدخول</button>
-</div>
-<div class="tab-panel active" id="tab-about">
-  <div class="wrap">
-    <div class="card">
-      <h2 class="section-title">من نحن</h2>
-      <p>
-        مركز خطوات مبكرة لضيافة الأطفال يتوفر لدينا كادر متخصص في رياض الأطفال لرعاية وتعليم أطفالكم وتنمية مهاراتهم، ضمن قسمي الروضة والحضانة، في بيئة آمنة ومحببة للأطفال.
-      </p>
-      <div class="two-cols">
-        <div class="mini-card">
-          <div class="ic">🧩</div>
-          <h4>الحضانة</h4>
-          <p>رعاية متخصصة</p>
-        </div>
-        <div class="mini-card">
-          <div class="ic">🎨</div>
-          <h4>الروضة</h4>
-          <p>تعليم وأنشطة يومية</p>
-        </div>
-      </div>
-      <div class="qurrah-banner">
-        ⭐ برنامج قُره — متوفر خصيصًا لدعم الأمهات العاملات
-      </div>
+
+    <div class="login-error" id="login-error"></div>
+
+    <div class="form-group">
+      <label>رقم الجوال / اسم المستخدم</label>
+      <input type="text" id="login-user" placeholder="مثال: 05xxxxxxxx" autocomplete="username">
     </div>
+    <div class="form-group">
+      <label>كلمة المرور</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:8px;" onclick="doLogin()">
+      دخول
+    </button>
+
+    <p style="text-align:center; margin-top:18px; font-size:.85rem; opacity:.65;">
+      للتجربة:<br>
+      مدير → المستخدم: <b>admin</b> / المرور: <b>1234</b><br>
+      ولي أمر → المستخدم: <b>parent1</b> / المرور: <b>1234</b>
+    </p>
   </div>
 </div>
-<div class="tab-panel" id="tab-features">
-  <div class="wrap">
-    <div class="card">
-      <h2 class="section-title">المميزات التي ترتكز عليها برامج المركز</h2>
-      <ul class="feature-list">
-        <li><div class="icon">👩‍🏫</div><div class="txt"><strong>كوادر تعليمية متخصصة في رياض الأطفال</strong></div></li>
-        <li><div class="icon">📚</div><div class="txt"><strong>تأسيس الطفل في مادة القرآن والإنجليزي والرياضيات ولغتي</strong></div></li>
-        <li><div class="icon">🕌</div><div class="txt"><strong>تعليم الآداب الإسلامية</strong></div></li>
-        <li><div class="icon">🎬</div><div class="txt"><strong>سينما للأطفال وصالة ألعاب داخلية وصالة ألعاب حركية</strong></div></li>
-        <li><div class="icon">🎓</div><div class="txt"><strong>مشرفة الحضانة حاصلة على بكالوريوس ضيافة أطفال ودورات تخصصية في رعاية الأطفال</strong></div></li>
-        <li><div class="icon">🧹</div><div class="txt"><strong>مكان مخصص هادئ ونظيف لراحة وسلامة الأطفال</strong></div></li>
-      </ul>
-    </div>
-  </div>
-</div>
-<div class="tab-panel" id="tab-prices">
-  <div class="wrap">
-    <div class="price-banner">🎉 الأسعار الحالية بخصم 20%</div>
-    <div class="card price-block">
-      <h3>🏠 الروضة</h3>
-      <div class="price-row"><span>السنة الدراسية كاملة</span><span><span class="price-old">4500</span><span class="price-new">3600</span></span></div>
-      <div class="price-row"><span>الفصل الدراسي</span><span><span class="price-old">2250</span><span class="price-new">1800</span></span></div>
-      <div class="offer-box">🎉 عرض الإخوان: الابن الثاني بخصم 33% — السنة الدراسية بـ 2400 فقط</div>
-      <div class="installment">💳 إمكانية التقسيط على 3 دفعات</div>
-    </div>
-    <div class="card price-block">
-      <h3>🧸 الحضانة</h3>
-      <div class="price-row"><span>الشهر</span><span class="price-new">640</span></div>
-      <div class="nursery-note"><span>👩‍🏫</span><span>مشرفة خريجة رياض أطفال متخصصة في هذه المرحلة العمرية</span></div>
-    </div>
-  </div>
-</div>
-<div class="tab-panel" id="tab-contact">
-  <div class="wrap">
-    <div class="card">
-      <h2 class="section-title">📍 الموقع</h2>
-      <div class="contact-item"><div class="ic">📍</div><div><strong>حي العسيلة</strong><br><span style="opacity:.8">أمام مدرسة الرابعة والثلاثون الابتدائية</span></div></div>
-      <div class="contact-item"><div class="ic">📱</div><div><strong>واتساب</strong><br><a href="https://wa.me/966538120576" style="color:var(--teal); font-weight:600;">0538120576</a></div></div>
-      <div class="contact-item"><div class="ic">💬</div><div><strong>التواصل من خلال المحادثة المباشرة</strong><br><span style="opacity:.8">أسفل الصفحة</span></div></div>
-      <a class="wa-btn" href="https://wa.me/966538120576" target="_blank" rel="noopener">💬 تواصل عبر واتساب</a>
-      <div class="invite-box">يسعدنا استقبال زيارتكم أو تواصلكم لمعرفة المزيد وحجز مقعد طفلكم</div>
-    </div>
-  </div>
-</div>
-<!-- ===== تسجيل الدخول فقط — تبويب عام دائم، لا يتحول اسمه أبداً ===== -->
-<div class="tab-panel" id="tab-pickup">
-  <div class="wrap">
-    <div class="card">
-      <div class="pickup-info" id="gateInner">
-        <p style="opacity:.7">⏳ جارِ تحميل نظام تسجيل الدخول…</p>
-      </div>
-    </div>
-  </div>
-</div>
-<footer>
-  🌈 مركز خطوات مبكرة لضيافة الأطفال — حي العسيلة، مكة المكرمة
-</footer>
-<!-- ===== شاشة مستقلة تماماً بعد تسجيل الدخول: استلام الطفل فقط ===== -->
-<div id="appScreen" style="display:none; min-height:100vh; background:var(--paper);">
+
+<!-- ========== التطبيق الرئيسي ========== -->
+<div id="app" class="hidden">
   <header>
     <div class="nav">
-      <div class="brand"><span class="logo-emoji">🌈</span><span>خطوات مبكرة</span></div>
+      <div class="brand">
+        <span class="logo-emoji">🌈</span>
+        <span>خطوات مبكرة</span>
+      </div>
       <div class="nav-actions">
-        <span id="whoTag" style="font-size:.85rem; opacity:.7;"></span>
-        <button class="btn btn-ghost2" onclick="appLogout()">خروج</button>
+        <span class="user-badge" id="user-badge"></span>
+        <button class="btn btn-outline btn-sm" onclick="doLogout()">خروج</button>
       </div>
     </div>
   </header>
-  <div class="wrap" style="padding:28px 20px;">
-    <div id="announceBox" style="display:none;" class="offer-box"></div>
-    <div id="adminComposeBox" style="display:none;" class="card">
-      <h2 class="section-title">✏️ إضافة تنبيه / فعالية</h2>
-      <p style="margin-bottom:12px;">هذا النص يظهر لجميع أولياء الأمور فوق صفحة استلام الطفل.</p>
-      <textarea id="announceInput" rows="3" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:12px; font-family:inherit; font-size:.92rem; background:var(--card); margin-bottom:10px;" placeholder="مثال: يوم الخميس القادم رحلة ترفيهية، الرجاء الحضور قبل الساعة 8"></textarea>
-      <button class="btn btn-primary" onclick="publishAnnouncement()">نشر التنبيه</button>
-      <button class="btn btn-ghost2" onclick="clearAnnouncement()">حذف التنبيه الحالي</button>
-    </div>
-    <div id="adminPendingBox" style="display:none;" class="card">
-      <h2 class="section-title">طلبات انضمام أولياء الأمور</h2>
-      <div id="pendingList"></div>
-    </div>
-    <div class="card pickup-info">
-      <div class="status">🔓 استلام الطفل</div>
-      <h2 class="section-title" style="justify-content:center;">طلب استلام الطفل</h2>
-      <p style="opacity:.8; margin-bottom:20px;">يمكنك طلب استلام طفلك أو التواصل مع المشرفة مباشرة عبر واتساب.</p>
-      <a class="btn btn-teal" href="https://wa.me/966538120576?text=السلام%20عليكم،%20أرغب%20بطلب%20استلام%20طفلي" target="_blank" rel="noopener">📲 طلب استلام عبر واتساب</a>
+
+  <div class="hero-banner">
+    <div class="hi" id="hero-hi">👋 حياكم</div>
+    <div class="sub">العب وأتعلم — بيئة دافئة لرعاية أطفالكم وتنمية مهاراتهم</div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <!-- من نحن -->
+  <div class="tab-panel" id="tab-about">
+    <div class="wrap">
+      <div class="card">
+        <h2 class="section-title">من نحن</h2>
+        <p>
+          مركز خطوات مبكرة لضيافة الأطفال يتوفر لدينا كادر متخصص في رياض الأطفال لرعاية وتعليم أطفالكم وتنمية مهاراتهم، ضمن قسمي الروضة والحضانة، في بيئة آمنة ومحببة للأطفال.
+        </p>
+        <div class="two-cols">
+          <div class="mini-card">
+            <div class="ic">🧩</div>
+            <h4>الحضانة</h4>
+            <p>رعاية متخصصة</p>
+          </div>
+          <div class="mini-card">
+            <div class="ic">🎨</div>
+            <h4>الروضة</h4>
+            <p>تعليم وأنشطة يومية</p>
+          </div>
+        </div>
+        <div class="qurrah-banner">
+          ⭐ برنامج قُره — متوفر خصيصًا لدعم الأمهات العاملات
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- المميزات -->
+  <div class="tab-panel" id="tab-features">
+    <div class="wrap">
+      <div class="card">
+        <h2 class="section-title">المميزات التي ترتكز عليها برامج المركز</h2>
+        <ul class="feature-list">
+          <li>
+            <div class="icon">👩‍🏫</div>
+            <div class="txt"><strong>كوادر تعليمية متخصصة في رياض الأطفال</strong></div>
+          </li>
+          <li>
+            <div class="icon">📚</div>
+            <div class="txt"><strong>تأسيس الطفل في مادة القرآن والإنجليزي والرياضيات ولغتي</strong></div>
+          </li>
+          <li>
+            <div class="icon">🕌</div>
+            <div class="txt"><strong>تعليم الآداب الإسلامية</strong></div>
+          </li>
+          <li>
+            <div class="icon">🎬</div>
+            <div class="txt"><strong>سينما للأطفال وصالة ألعاب داخلية وصالة ألعاب حركية</strong></div>
+          </li>
+          <li>
+            <div class="icon">🎓</div>
+            <div class="txt"><strong>مشرفة الحضانة حاصلة على بكالوريوس ضيافة أطفال ودورات تخصصية في رعاية الأطفال</strong></div>
+          </li>
+          <li>
+            <div class="icon">🧹</div>
+            <div class="txt"><strong>مكان مخصص هادئ ونظيف لراحة وسلامة الأطفال</strong></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- الأسعار -->
+  <div class="tab-panel" id="tab-prices">
+    <div class="wrap">
+      <div class="price-banner">🎉 الأسعار الحالية بخصم 20%</div>
+      <div class="card price-block">
+        <h3>🏠 الروضة</h3>
+        <div class="price-row">
+          <span>السنة الدراسية كاملة</span>
+          <span>
+            <span class="price-old">4500</span>
+            <span class="price-new">3600</span>
+          </span>
+        </div>
+        <div class="price-row">
+          <span>الفصل الدراسي</span>
+          <span>
+            <span class="price-old">2250</span>
+            <span class="price-new">1800</span>
+          </span>
+        </div>
+        <div class="offer-box">
+          🎉 عرض الإخوان: الابن الثاني بخصم 33% — السنة الدراسية بـ 2400 فقط
+        </div>
+        <div class="installment">💳 إمكانية التقسيط على 3 دفعات</div>
+      </div>
+      <div class="card price-block">
+        <h3>🧸 الحضانة</h3>
+        <div class="price-row">
+          <span>الشهر</span>
+          <span class="price-new">640</span>
+        </div>
+        <div class="nursery-note">
+          <span>👩‍🏫</span>
+          <span>مشرفة خريجة رياض أطفال متخصصة في هذه المرحلة العمرية</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- التواصل -->
+  <div class="tab-panel" id="tab-contact">
+    <div class="wrap">
+      <div class="card">
+        <h2 class="section-title">📍 الموقع</h2>
+        <div class="contact-item">
+          <div class="ic">📍</div>
+          <div>
+            <strong>حي العسيلة</strong><br>
+            <span style="opacity:.8">أمام مدرسة الرابعة والثلاثون الابتدائية</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ic">📱</div>
+          <div>
+            <strong>للتواصل العام</strong><br>
+            <span style="opacity:.8">0538120576</span>
+          </div>
+        </div>
+        <div class="invite-box">
+          يسعدنا استقبال زيارتكم أو تواصلكم لمعرفة المزيد وحجز مقعد طفلكم
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- استلام الطفل (ولي الأمر) -->
+  <div class="tab-panel" id="tab-pickup">
+    <div class="wrap">
+      <div class="card">
+        <div class="pickup-info">
+          <div class="status">🔒 استلام الطفل</div>
+          <h2 class="section-title" style="justify-content:center;">طلب استلام الطفل</h2>
+          <p style="opacity:.8; margin-bottom:20px;">
+            أرسل طلب الاستلام من هنا. سيصل الطلب مباشرة إلى إدارة المركز.
+          </p>
+        </div>
+
+        <div class="success-msg" id="pickup-success">✅ تم إرسال طلب الاستلام بنجاح</div>
+
+        <div class="form-group">
+          <label>اسم الطفل</label>
+          <input type="text" id="pickup-child" placeholder="اسم الطفل الكامل">
+        </div>
+        <div class="form-group">
+          <label>وقت الاستلام المتوقع</label>
+          <input type="time" id="pickup-time">
+        </div>
+        <div class="form-group">
+          <label>ملاحظات (اختياري)</label>
+          <textarea id="pickup-note" placeholder="مثال: سأستلم مع الجدة..."></textarea>
+        </div>
+        <button class="btn btn-teal" style="width:100%; justify-content:center;" onclick="submitPickup()">
+          📲 إرسال طلب الاستلام
+        </button>
+      </div>
+
+      <!-- طلبات ولي الأمر السابقة -->
+      <div class="card" id="my-requests-card">
+        <h2 class="section-title">طلباتي السابقة</h2>
+        <div id="my-requests-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- صندوق الاقتراحات (ولي الأمر) -->
+  <div class="tab-panel" id="tab-suggestions">
+    <div class="wrap">
+      <div class="card">
+        <h2 class="section-title">💡 صندوق الاقتراحات</h2>
+        <p style="margin-bottom:18px; opacity:.8;">نرحب بآرائكم واقتراحاتكم لتحسين خدمات المركز.</p>
+
+        <div class="success-msg" id="suggest-success">✅ تم إرسال اقتراحك بنجاح، شكرًا لك!</div>
+
+        <div class="form-group">
+          <label>اقتراحك أو ملاحظتك</label>
+          <textarea id="suggest-text" placeholder="اكتب اقتراحك هنا..."></textarea>
+        </div>
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="submitSuggestion()">
+          إرسال الاقتراح
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- إدارة الأعضاء (مدير) -->
+  <div class="tab-panel" id="tab-members">
+    <div class="wrap">
+      <div class="card">
+        <h2 class="section-title">👥 إدارة الأعضاء</h2>
+
+        <div class="alert-info">يمكنك إضافة أولياء أمور جدد أو حذف أي عضو.</div>
+
+        <div class="form-row" style="margin-bottom:20px;">
+          <div class="form-group">
+            <label>اسم المستخدم / الجوال</label>
+            <input type="text" id="new-member-user" placeholder="05xxxxxxxx">
+          </div>
+          <div class="form-group">
+            <label>الاسم الكامل</label>
+            <input type="text" id="new-member-name" placeholder="اسم ولي الأمر">
+          </div>
+          <div class="form-group">
+            <label>كلمة المرور</label>
+            <input type="text" id="new-member-pass" placeholder="1234" value="1234">
+          </div>
+        </div>
+        <button class="btn btn-teal btn-sm" onclick="addMember()">+ إضافة عضو</button>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:14px;">قائمة الأعضاء</h3>
+        <div id="members-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- طلبات الاستلام (مدير) -->
+  <div class="tab-panel" id="tab-admin-pickup">
+    <div class="wrap">
+      <div class="card">
+        <h2 class="section-title">🔒 طلبات استلام الأطفال</h2>
+        <div id="admin-requests-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الاقتراحات الواردة (مدير) -->
+  <div class="tab-panel" id="tab-admin-suggestions">
+    <div class="wrap">
+      <div class="card">
+        <h2 class="section-title">💡 الاقتراحات الواردة</h2>
+        <div id="admin-suggestions-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    🌈 مركز خطوات مبكرة لضيافة الأطفال — حي العسيلة، مكة المكرمة
+  </footer>
 </div>
+
 <script>
+/* ========== البيانات الافتراضية ========== */
+const DEFAULT_USERS = [
+  { id: 1, username: 'admin', password: '1234', name: 'مدير المركز', role: 'admin' },
+  { id: 2, username: 'parent1', password: '1234', name: 'أحمد العتيبي', role: 'parent' },
+  { id: 3, username: 'parent2', password: '1234', name: 'سارة الحربي', role: 'parent' }
+];
+
+let currentUser = null;
+let selectedRole = 'parent';
+
+/* ========== التخزين المحلي ========== */
+function loadData(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch { return fallback; }
+}
+function saveData(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function getUsers() { return loadData('km_users', DEFAULT_USERS); }
+function saveUsers(users) { saveData('km_users', users); }
+
+function getRequests() { return loadData('km_requests', []); }
+function saveRequests(list) { saveData('km_requests', list); }
+
+function getSuggestions() { return loadData('km_suggestions', []); }
+function saveSuggestions(list) { saveData('km_suggestions', list); }
+
+/* ========== تسجيل الدخول ========== */
+function setRole(role) {
+  selectedRole = role;
+  document.querySelectorAll('.role-tab').forEach(t => t.classList.toggle('active', t.dataset.role === role));
+}
+
+function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-error');
+
+  if (!user || !pass) {
+    err.style.display = 'block';
+    err.textContent = 'يرجى إدخال اسم المستخدم وكلمة المرور';
+    return;
+  }
+
+  const users = getUsers();
+  const found = users.find(u => u.username === user && u.password === pass && u.role === selectedRole);
+
+  if (!found) {
+    err.style.display = 'block';
+    err.textContent = 'بيانات الدخول غير صحيحة أو الدور غير مطابق';
+    return;
+  }
+
+  currentUser = found;
+  localStorage.setItem('km_session', JSON.stringify(found));
+  showApp();
+}
+
+function doLogout() {
+  currentUser = null;
+  localStorage.removeItem('km_session');
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-error').style.display = 'none';
+}
+
+function checkSession() {
+  const session = loadData('km_session', null);
+  if (session) {
+    currentUser = session;
+    showApp();
+  }
+}
+
+/* ========== بناء الواجهة حسب الدور ========== */
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').classList.remove('hidden');
+
+  const badge = document.getElementById('user-badge');
+  badge.innerHTML = currentUser.role === 'admin'
+    ? `👑 ${currentUser.name}`
+    : `👨‍👩‍👧 ${currentUser.name}`;
+
+  document.getElementById('hero-hi').textContent =
+    currentUser.role === 'admin' ? `👋 أهلاً ${currentUser.name}` : `👋 حياك ${currentUser.name}`;
+
+  buildTabs();
+  switchTab('about');
+  renderMembers();
+  renderRequests();
+  renderSuggestions();
+  renderMyRequests();
+}
+
+function buildTabs() {
+  const tabsEl = document.getElementById('tabs');
+  const isAdmin = currentUser.role === 'admin';
+
+  const common = [
+    { id: 'about', label: 'من نحن' },
+    { id: 'features', label: 'مميزاتنا ✨' },
+    { id: 'prices', label: 'الأقسام والأسعار' },
+    { id: 'contact', label: 'تواصل معنا' }
+  ];
+
+  const parentTabs = [
+    ...common,
+    { id: 'pickup', label: 'استلام الطفل 🔒' },
+    { id: 'suggestions', label: 'اقتراحات 💡' }
+  ];
+
+  const adminTabs = [
+    ...common,
+    { id: 'admin-pickup', label: 'طلبات الاستلام 🔒' },
+    { id: 'members', label: 'الأعضاء 👥' },
+    { id: 'admin-suggestions', label: 'الاقتراحات 💡' }
+  ];
+
+  const tabs = isAdmin ? adminTabs : parentTabs;
+
+  tabsEl.innerHTML = tabs.map((t, i) =>
+    `<button class="tab-btn ${i === 0 ? 'active' : ''}" data-tab="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`
+  ).join('');
+}
+
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelector(`.tab-btn[data-tab="${name}"]`).classList.add('active');
-  document.getElementById('tab-' + name).classList.add('active');
+
+  const btn = document.querySelector(`.tab-btn[data-tab="${name}"]`);
+  if (btn) btn.classList.add('active');
+
+  const panel = document.getElementById('tab-' + name);
+  if (panel) panel.classList.add('active');
+
   window.scrollTo(0, 0);
-}
-/* تسجيل الدخول منفصل تماماً عن "استلام الطفل" — Firebase Auth + Firestore
-   الصفحة العامة (تبويبات) لا تتغيّر أبداً؛ بعد الدخول والموافقة تُستبدل الشاشة كاملة بـ appScreen */
-</script>
-<script type="module">
-import { initializeApp } from "https://cdn.jsdelivr.net/npm/firebase@10.13.2/app/+esm";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://cdn.jsdelivr.net/npm/firebase@10.13.2/auth/+esm";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, query, where, onSnapshot, serverTimestamp } from "https://cdn.jsdelivr.net/npm/firebase@10.13.2/firestore/+esm";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDILSJErVUfBg19pj01RyHRnu9RU4B4XRc",
-  authDomain: "hamahameed.firebaseapp.com",
-  projectId: "hamahameed",
-  storageBucket: "hamahameed.firebasestorage.app",
-  messagingSenderId: "1023597136212",
-  appId: "1:1023597136212:web:9a5a8ad01c11cb640a60c1",
-  measurementId: "G-9DJ86N5Y3E"
-};
+  // تحديث القوائم عند فتح التبويب
+  if (name === 'members') renderMembers();
+  if (name === 'admin-pickup') renderRequests();
+  if (name === 'admin-suggestions') renderSuggestions();
+  if (name === 'pickup') renderMyRequests();
+}
 
-const SUPER_ADMIN_EMAIL = "hameed.h.almalki@gmail.com";
-let auth, db, fbReady=false;
-try{ const app=initializeApp(firebaseConfig); auth=getAuth(app); db=getFirestore(app); fbReady=true; }catch(e){ fbReady=false; }
-const gateInner = document.getElementById("gateInner");
-const appScreen = document.getElementById("appScreen");
-const siteWrap = document.querySelectorAll("header, .hero-banner, .tabs, footer");
-let profile=null, user=null, authMode="login", authErr="", unsubProfile=null, unsubAnn=null, unsubPending=null;
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function friendlyErr(e){const m={"auth/invalid-email":"صيغة البريد غير صحيحة","auth/user-not-found":"لا يوجد حساب بهذا البريد","auth/wrong-password":"كلمة المرور غير صحيحة","auth/invalid-credential":"البريد أو كلمة المرور غير صحيحة","auth/email-already-in-use":"هذا البريد مسجّل، جرّبي تسجيل الدخول","auth/weak-password":"كلمة المرور يجب 6 أحرف فأكثر","auth/too-many-requests":"محاولات كثيرة متتالية، حاولي بعد قليل","auth/network-request-failed":"تعذّر الاتصال بالإنترنت، تأكدي من الشبكة وحاولي مرة أخرى","auth/user-disabled":"هذا الحساب معطّل، تواصلي مع الإدارة"}; return m[e.code]||e.message||"حدث خطأ";}
-async function ensureUserDoc(uid,name,email){
-  const ref=doc(db,"pickupUsers",uid); const snap=await getDoc(ref);
-  if(snap.exists()) return snap.data();
-  const isSuper = email.toLowerCase()===SUPER_ADMIN_EMAIL.toLowerCase();
-  const data={name:name||email.split("@")[0], email:email.toLowerCase(), role:isSuper?"مسؤول":"", status:isSuper?"approved":"pending", createdAt:serverTimestamp()};
-  await setDoc(ref,data); return data;
-}
-if(!fbReady){ gateInner.innerHTML = `<div class="pk-err" style="display:block">لم يتم ربط النظام بمشروع Firebase بعد.</div>`; }
-else{
-  renderGate();
-  onAuthStateChanged(auth, async (u)=>{
-    if(unsubProfile) unsubProfile();
-    if(!u){ user=null; profile=null; hideApp(); renderGate(); return; }
-    user=u; profile=null;
-    gateInner.innerHTML = `<p style="opacity:.7">⏳ جارِ التحقق من حسابك…</p>`;
-    try{ profile = await ensureUserDoc(u.uid, u.displayName, u.email); }catch(e){ profile=null; }
-    unsubProfile = onSnapshot(doc(db,"pickupUsers",u.uid), snap=>{
-      if(snap.exists()) profile=snap.data();
-      if(profile && profile.status==="approved") showApp(); else { hideApp(); renderGate(); }
-    });
-  }, (err)=>{ gateInner.innerHTML = `<div class="pk-err" style="display:block">تعذّر الاتصال: ${esc(err.message)}</div>`; });
-}
-function renderGate(){
-  // مستخدم مسجّل دخول لكن لسا ما انبتّ بطلبه (بانتظار موافقة / مرفوض)
-  if(user){
-    if(!profile){
-      gateInner.innerHTML = `<p style="opacity:.7">⏳ جارِ التحقق من حسابك…</p>`;
-      return;
-    }
-    if(profile.status === "pending"){
-      gateInner.innerHTML = `
-        <div class="status" style="margin:0 auto 14px;">⏳ بانتظار الموافقة</div>
-        <h2 class="section-title" style="justify-content:center;">طلبك قيد المراجعة</h2>
-        <p style="opacity:.8; margin-bottom:20px;">تم استلام طلب انضمامك بنجاح، وسيتم تفعيل حسابك بعد موافقة الإدارة. يمكنك المحاولة لاحقًا أو التواصل معنا عبر واتساب.</p>
-        <button class="pk-logout" onclick="window.appLogout()">تسجيل الخروج</button>`;
-      return;
-    }
-    if(profile.status === "rejected"){
-      gateInner.innerHTML = `
-        <div class="pk-err" style="display:block">تم رفض طلب انضمامك. للاستفسار تواصلي مع الإدارة عبر واتساب.</div>
-        <button class="pk-logout" onclick="window.appLogout()">تسجيل الخروج</button>`;
-      return;
-    }
-    // approved تُعالج عبر showApp() ولا تصل هذا المسار عادة
+/* ========== طلبات الاستلام ========== */
+function submitPickup() {
+  const child = document.getElementById('pickup-child').value.trim();
+  const time = document.getElementById('pickup-time').value;
+  const note = document.getElementById('pickup-note').value.trim();
+
+  if (!child) {
+    alert('يرجى كتابة اسم الطفل');
     return;
   }
-  const isLogin = authMode==="login";
-  gateInner.innerHTML = `
-    <h2 class="section-title" style="justify-content:center;">${isLogin?"تسجيل الدخول":"إنشاء حساب ولي أمر"}</h2>
-    ${authErr?`<div class="pk-err" style="display:block">${esc(authErr)}</div>`:""}
-    ${!isLogin?`<input class="pk-field" id="gName" autocomplete="name" placeholder="الاسم الكامل">`:""}
-    <input class="pk-field" id="gEmail" type="email" dir="ltr" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="البريد الإلكتروني">
-    <input class="pk-field" id="gPass" type="password" dir="ltr" autocomplete="${isLogin?"current-password":"new-password"}" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="كلمة المرور">
-    <button class="btn btn-primary" id="gAuthBtn" onclick="window._doAuth()">${isLogin?"دخول":"إنشاء الحساب"}</button>
-    <p style="margin-top:14px; font-size:.88rem;">${isLogin?"ولي أمر جديد؟":"لديك حساب؟"} <a href="#" onclick="window._switchAuth();return false;" style="color:var(--coral); font-weight:700;">${isLogin?"سجّل حساب جديد":"تسجيل الدخول"}</a></p>`;
-}
-window._switchAuth = ()=>{ authMode = authMode==="login"?"register":"login"; authErr=""; renderGate(); };
-window._doAuth = async ()=>{
-  const email=document.getElementById("gEmail").value.trim(), pass=document.getElementById("gPass").value;
-  const btn=document.getElementById("gAuthBtn");
-  authErr="";
-  if(!email || !pass){ authErr="الرجاء تعبئة البريد وكلمة المرور"; renderGate(); return; }
-  if(btn){ btn.disabled=true; btn.style.opacity=".6"; btn.textContent="جارِ التحقق..."; }
-  try{
-    if(authMode==="login") await signInWithEmailAndPassword(auth,email,pass);
-    else{
-      const name=document.getElementById("gName").value.trim();
-      if(!name){ authErr="الرجاء إدخال الاسم"; renderGate(); return; }
-      const cred=await createUserWithEmailAndPassword(auth,email,pass);
-      await ensureUserDoc(cred.user.uid,name,email);
-    }
-  }catch(e){ authErr=friendlyErr(e); renderGate(); }
-};
-window.appLogout = async ()=>{ await signOut(auth); };
-function hideApp(){ appScreen.style.display="none"; siteWrap.forEach(el=>el.style.display=""); if(unsubAnn)unsubAnn(); if(unsubPending)unsubPending(); }
-function showApp(){
-  siteWrap.forEach(el=>el.style.display="none");
-  appScreen.style.display="block";
-  document.getElementById("whoTag").textContent = `${profile.name} · ${profile.role}`;
-  const isAdmin = profile.role==="مسؤول";
-  document.getElementById("adminComposeBox").style.display = isAdmin?"block":"none";
-  document.getElementById("adminPendingBox").style.display = isAdmin?"block":"none";
-  unsubAnn = onSnapshot(doc(db,"settings","announcement"), snap=>{
-    const box=document.getElementById("announceBox");
-    if(snap.exists() && snap.data().text){ box.style.display="block"; box.textContent="📢 "+snap.data().text; }
-    else box.style.display="none";
+
+  const requests = getRequests();
+  requests.unshift({
+    id: Date.now(),
+    parentId: currentUser.id,
+    parentName: currentUser.name,
+    childName: child,
+    time: time || '—',
+    note: note || '—',
+    status: 'pending',
+    createdAt: new Date().toLocaleString('ar-SA')
   });
-  if(isAdmin){
-    unsubPending = onSnapshot(query(collection(db,"pickupUsers"), where("status","==","pending")), snap=>{
-      const users = snap.docs.map(d=>({id:d.id,...d.data()}));
-      const list=document.getElementById("pendingList");
-      list.innerHTML = users.length===0 ? `<p style="opacity:.7">لا يوجد طلبات انضمام حالياً</p>` :
-        users.map(u=>`<div class="contact-item"><div><strong>${esc(u.name)}</strong><br><span style="opacity:.7">${esc(u.email)}</span></div>
-        <div style="margin-right:auto; display:flex; gap:8px;"><button class="btn btn-teal" style="padding:8px 14px;font-size:.82rem" onclick="window._approve('${u.id}')">قبول كولي أمر</button>
-        <button class="btn btn-ghost2" style="padding:8px 14px;font-size:.82rem" onclick="window._reject('${u.id}')">رفض</button></div></div>`).join("");
-    });
+  saveRequests(requests);
+
+  document.getElementById('pickup-child').value = '';
+  document.getElementById('pickup-time').value = '';
+  document.getElementById('pickup-note').value = '';
+
+  const msg = document.getElementById('pickup-success');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 3000);
+
+  renderMyRequests();
+}
+
+function renderMyRequests() {
+  const list = document.getElementById('my-requests-list');
+  if (!list) return;
+
+  const mine = getRequests().filter(r => r.parentId === currentUser.id);
+
+  if (mine.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="ic">📭</div>لا توجد طلبات بعد</div>`;
+    return;
+  }
+
+  list.innerHTML = mine.map(r => `
+    <div class="request-row">
+      <div class="request-info">
+        <strong>${r.childName}</strong>
+        <span>الوقت: ${r.time} • ${r.createdAt}</span>
+        ${r.note !== '—' ? `<span>ملاحظة: ${r.note}</span>` : ''}
+      </div>
+      <span class="badge ${r.status === 'pending' ? 'badge-pending' : 'badge-done'}">
+        ${r.status === 'pending' ? 'قيد الانتظار' : 'تم الاستلام'}
+      </span>
+    </div>
+  `).join('');
+}
+
+function renderRequests() {
+  const list = document.getElementById('admin-requests-list');
+  if (!list) return;
+
+  const requests = getRequests();
+
+  if (requests.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="ic">📭</div>لا توجد طلبات استلام حالياً</div>`;
+    return;
+  }
+
+  list.innerHTML = requests.map(r => `
+    <div class="request-row">
+      <div class="request-info">
+        <strong>${r.childName}</strong>
+        <span>ولي الأمر: ${r.parentName}</span>
+        <span>الوقت: ${r.time} • ${r.createdAt}</span>
+        ${r.note !== '—' ? `<span>ملاحظة: ${r.note}</span>` : ''}
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span class="badge ${r.status === 'pending' ? 'badge-pending' : 'badge-done'}">
+          ${r.status === 'pending' ? 'قيد الانتظار' : 'تم'}
+        </span>
+        ${r.status === 'pending' ? `
+          <button class="btn btn-teal btn-sm" onclick="markRequestDone(${r.id})">تم الاستلام</button>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function markRequestDone(id) {
+  const requests = getRequests();
+  const idx = requests.findIndex(r => r.id === id);
+  if (idx > -1) {
+    requests[idx].status = 'done';
+    saveRequests(requests);
+    renderRequests();
   }
 }
-window._approve = async (id)=>{ await updateDoc(doc(db,"pickupUsers",id), {status:"approved", role:"ولي أمر"}); };
-window._reject = async (id)=>{ await updateDoc(doc(db,"pickupUsers",id), {status:"rejected"}); };
-window.publishAnnouncement = async ()=>{
-  const text=document.getElementById("announceInput").value.trim();
-  if(!text) return;
-  await setDoc(doc(db,"settings","announcement"), {text, updatedBy:profile.email, updatedAt:serverTimestamp()});
-  document.getElementById("announceInput").value="";
-};
-window.clearAnnouncement = async ()=>{ await deleteDoc(doc(db,"settings","announcement")); };
+
+/* ========== الاقتراحات ========== */
+function submitSuggestion() {
+  const text = document.getElementById('suggest-text').value.trim();
+  if (!text) {
+    alert('يرجى كتابة الاقتراح');
+    return;
+  }
+
+  const list = getSuggestions();
+  list.unshift({
+    id: Date.now(),
+    parentId: currentUser.id,
+    parentName: currentUser.name,
+    text,
+    createdAt: new Date().toLocaleString('ar-SA')
+  });
+  saveSuggestions(list);
+
+  document.getElementById('suggest-text').value = '';
+  const msg = document.getElementById('suggest-success');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 3000);
+}
+
+function renderSuggestions() {
+  const list = document.getElementById('admin-suggestions-list');
+  if (!list) return;
+
+  const suggestions = getSuggestions();
+
+  if (suggestions.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="ic">💭</div>لا توجد اقتراحات بعد</div>`;
+    return;
+  }
+
+  list.innerHTML = suggestions.map(s => `
+    <div class="suggestion-row">
+      <div class="suggestion-info">
+        <strong>${s.parentName}</strong>
+        <span>${s.createdAt}</span>
+        <p style="margin-top:6px; opacity:.9;">${s.text}</p>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="deleteSuggestion(${s.id})">حذف</button>
+    </div>
+  `).join('');
+}
+
+function deleteSuggestion(id) {
+  if (!confirm('هل تريد حذف هذا الاقتراح؟')) return;
+  let list = getSuggestions().filter(s => s.id !== id);
+  saveSuggestions(list);
+  renderSuggestions();
+}
+
+/* ========== إدارة الأعضاء ========== */
+function renderMembers() {
+  const list = document.getElementById('members-list');
+  if (!list) return;
+
+  const users = getUsers().filter(u => u.role === 'parent');
+
+  if (users.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="ic">👤</div>لا يوجد أولياء أمور مسجلين</div>`;
+    return;
+  }
+
+  list.innerHTML = users.map(u => `
+    <div class="member-row">
+      <div class="member-info">
+        <strong>${u.name}</strong>
+        <span>${u.username} • <span class="badge badge-parent">ولي أمر</span></span>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="deleteMember(${u.id})">حذف</button>
+    </div>
+  `).join('');
+}
+
+function addMember() {
+  const username = document.getElementById('new-member-user').value.trim();
+  const name = document.getElementById('new-member-name').value.trim();
+  const password = document.getElementById('new-member-pass').value.trim() || '1234';
+
+  if (!username || !name) {
+    alert('يرجى تعبئة اسم المستخدم والاسم الكامل');
+    return;
+  }
+
+  const users = getUsers();
+  if (users.some(u => u.username === username)) {
+    alert('اسم المستخدم موجود مسبقاً');
+    return;
+  }
+
+  users.push({
+    id: Date.now(),
+    username,
+    password,
+    name,
+    role: 'parent'
+  });
+  saveUsers(users);
+
+  document.getElementById('new-member-user').value = '';
+  document.getElementById('new-member-name').value = '';
+  document.getElementById('new-member-pass').value = '1234';
+
+  renderMembers();
+}
+
+function deleteMember(id) {
+  if (!confirm('هل أنت متأكد من حذف هذا العضو؟')) return;
+  let users = getUsers().filter(u => u.id !== id);
+  saveUsers(users);
+  renderMembers();
+}
+
+/* ========== تشغيل ========== */
+checkSession();
 </script>
 </body>
 </html>
